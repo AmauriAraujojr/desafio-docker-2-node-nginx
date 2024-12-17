@@ -11,6 +11,11 @@ services:
     environment:
       - MYSQL_DATABASE=mysql
       - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 10s
+      retries: 3  
     networks: 
       - my_network 
     
@@ -21,13 +26,15 @@ services:
     networks:
       - my_network 
     volumes:
-      - ./node:/usr/src/app  
+      - ./node:/usr/src/app
+      - /usr/src/app/node_modules
     tty: true
     ports:
       - "8180:8180"
     depends_on:
-      - my-sql
-      
+        my-sql:
+          condition: service_healthy
+    command: "node index.js" 
 
   my-nginx:
     build:

@@ -6,4 +6,5 @@ COPY . .
 
 EXPOSE 8180
 
-CMD ["node", "index.js"]
+RUN npm install 
+
