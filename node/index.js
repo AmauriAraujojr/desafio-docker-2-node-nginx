@@ -53,7 +53,7 @@ tryConnect()
 
         const names = results;
         let responseHTML =
-          "<h1>Full Cycle Rocks!</h1><h1>Lista de Pessoas</h1><ul>";
+          "<h1>Full Cycle Rocks!</h1><ul>";
         names.forEach((person) => {
           responseHTML += `<li>${person.name}</li>`;
         });
